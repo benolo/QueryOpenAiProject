@@ -1,0 +1,35 @@
+# Node modules (massive and regenerated from package.json)
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example  # Keep an example file for reference, no secrets inside
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE configuration
+.vscode/
+.idea/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Local environment / runtime files
+coverage/
+.tmp/
+.cache/
