@@ -1,18 +1,8 @@
-import { generateResponse, generateResponseFromContext } from '../../ai.service';
+import { generateResponseWithOptionalContext } from '../../ai.service';
 
-export const query = async(text: string) => {
+export const query = async(text: string, store?: boolean | null) => {
     try {
-        const openAiResponse = await generateResponse(text)
-        return openAiResponse
-    } catch (error) {
-        console.log(error)
-        throw error
-    }
-}
-
-export const queryWithContext = async(text: string) => {
-    try {
-        const openAiResponse = await generateResponseFromContext(text)
+        const openAiResponse = await generateResponseWithOptionalContext(text, store)
         return openAiResponse
     } catch (error) {
         console.log(error)

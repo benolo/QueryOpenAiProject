@@ -1,36 +1,23 @@
-import { Request, Response } from 'express'
-import { query, queryWithContext } from '../services/query.services'
+import { Response } from 'express'
+import { query } from '../services/query.services'
 import { QueryResearchRequest } from '../routes/query.routes'
 
 export const queryResearch = async (req: QueryResearchRequest, res: Response) => {
     try {
-        const {text} = req.body
-        const { mode } = req.query;
+        // 🧾 Log request data in a pretty format
+        // console.log('--- Incoming Request ---');
+        // console.log('Headers:', JSON.stringify(req.headers, null, 2));
+        // console.log('Body:', JSON.stringify(req.body, null, 2));
+        // console.log('------------------------');
 
-        // The existence of text will be checked in the next method
-        if (mode === 'context') {
-            return queryResearchFromContext(req, res)
-        }
+        const {text, store} = req.body
 
         if (!text) {
             return res.status(400).json({ error: 'Missing query search content..asshole'})
         }
 
-        const queryResponse = await query(text)
-        return res.status(200).json( { result: queryResponse})
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send('Internal Server Error')
-    }
-}
+        const queryResponse = await query(text, store ?? false)
 
-export const queryResearchFromContext = async (req: QueryResearchRequest, res: Response) => {
-    try {
-        const {text} = req.body
-        if (!text) {
-            return res.status(400).json({ error: 'Missing query search content..asshole'})
-        }
-        const queryResponse = await queryWithContext(text)
         return res.status(200).json( { result: queryResponse})
     } catch (error) {
         console.log(error)

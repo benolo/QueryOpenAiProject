@@ -6,12 +6,11 @@ interface AIOptions {
   model?: string;
   response_format?: 'structured' | 'strict';
 }
+let previousMessageId: string | null = null
 
-// Simple array to keep chat messages in memory
-const chatHistory: { role: string; content: string }[] = [];
-
-export async function generateResponse(
+export async function generateResponseWithOptionalContext(
   prompt: string,
+  store?: boolean | null,
   options: AIOptions = {}
 ) {
   const isStrictRequired =
@@ -20,45 +19,21 @@ export async function generateResponse(
 
   const response = await openai.responses.create({
     model: env.OPENAI_MODEL,
-    input: prompt,
+    store: store,
+    previous_response_id: previousMessageId,
     temperature: options.temperature ?? env.OPENAI_TEMPERATURE,
+    input: prompt,
     ...(isStrictRequired ? { response_format: { type: 'json_object' as const } } : {})
   });
 
-  return response.output_text ?? '';
-}
+  if (store) previousMessageId = response.id
 
-export async function generateResponseFromContext(
-  prompt: string,
-  options: AIOptions = {}
-) {
-  const isStrictRequired =
-    options.response_format === 'strict' ||
-    env.OPENAI_RESPONSE_FORMAT === 'strict';
-
-  // Add user message to history
-  chatHistory.push({ role: 'user', content: prompt });
-
-  const response = await openai.responses.create({
-    model: env.OPENAI_MODEL,
-    input: [
-      {
-        role: 'user',
-        content: [
-          {
-            type: 'input_text',
-            text: chatHistory.map((m) => `${m.role}: ${m.content}`).join('\n'),
-          },
-        ],
-      },
-    ],
-    ...(isStrictRequired ? { response_format: { type: 'json_object' as const } } : {})
-  });
+  // 🧾 Log request data in a pretty format
+  // console.log('--- Incoming Response ---');
+  // console.log('Body:', JSON.stringify(response, null, 2));
+  // console.log('------------------------');
 
   const answer = response.output_text ?? '';
-
-  // Add model reply to history for next call
-  chatHistory.push({ role: "assistant", content: answer });
   
   return answer;
 }
