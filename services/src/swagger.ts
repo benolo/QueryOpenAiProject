@@ -1,3 +1,4 @@
+import path from 'path';
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const options = {
@@ -9,7 +10,8 @@ const options = {
       description: 'Auto-generated Swagger documentation for this microservice',
     },
   },
-  apis: ['./src/routes/*.ts'],
+  // apis: ['./query-service/routes/*.ts']
+  apis: [path.join(__dirname, './query-service/routes/*.ts')],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
