@@ -7,6 +7,7 @@ import { setupSwagger } from './config/swagger';
 import logger from './logger';
 import healthRouter from './query-service/routes/health';
 import { queryRouter } from './query-service/routes/query.routes';
+import imageRouter from './image-service/routes/image.route';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(morgan('combined', {
 // Routes
 app.use('/health', healthRouter);
 app.use('/', queryRouter);
+app.use('/', imageRouter);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;

@@ -1,5 +1,5 @@
 import { openai } from './lib/openai';
-import { env } from './config/env';
+import { analyzeFoodImageSchema, env, analyzeFoodPrompt } from './config/env';
 
 interface AIOptions {
   temperature?: number;
@@ -34,6 +34,29 @@ export async function generateResponseWithOptionalContext(
   // console.log('------------------------');
 
   const answer = response.output_text ?? '';
-  
+
   return answer;
 }
+
+
+export async function analyzeFoodImage(base64Image: string) {
+
+  const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+
+  const response = await openai.responses.create({
+    model: env.OPENAI_MODEL,
+    input: [
+      {
+        role: "user",
+        content: [
+          { type: "input_text", text: analyzeFoodPrompt },
+          { type: "input_image", image_url: dataUrl, detail: "auto" }
+        ]
+      }
+    ]
+  });
+
+  const jsonText = response.output_text ?? "{}";
+  return analyzeFoodImageSchema.parse(JSON.parse(jsonText));
+}
+

@@ -11,7 +11,7 @@ const options = {
     },
   },
   // apis: ['./query-service/routes/*.ts']
-  apis: [path.join(__dirname, './query-service/routes/*.ts')],
+  apis: [path.join(__dirname, './query-service/routes/*.ts'), path.join(__dirname, './image-service/routes/*.ts')],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
