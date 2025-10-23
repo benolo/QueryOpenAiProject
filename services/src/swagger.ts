@@ -1,18 +1,18 @@
+import swaggerJsdoc from 'swagger-jsdoc';
 import path from 'path';
-import swaggerJSDoc from 'swagger-jsdoc';
 
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Microservice API',
+      title: 'Query Service API',
       version: '1.0.0',
-      description: 'Auto-generated Swagger documentation for this microservice',
+      description: 'API documentation for the Query Service',
     },
   },
-  // apis: ['./query-service/routes/*.ts']
+  // Adjust the path below to match where your route/controller files are
   apis: [path.join(__dirname, './query-service/routes/*.ts'), path.join(__dirname, './image-service/routes/*.ts')],
 };
 
-const swaggerSpec = swaggerJSDoc(options);
+export const swaggerSpec = swaggerJsdoc(options);
 export default swaggerSpec;

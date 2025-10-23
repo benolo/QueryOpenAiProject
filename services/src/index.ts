@@ -2,8 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './swagger';
-import { setupSwagger } from './config/swagger';
+import { swaggerSpec } from './swagger';
 import logger from './logger';
 import healthRouter from './query-service/routes/health';
 import { queryRouter } from './query-service/routes/query.routes';
@@ -14,8 +13,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// setup swagger UI
-setupSwagger(app);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Logging
 app.use(morgan('combined', {
@@ -28,7 +26,6 @@ app.use(morgan('combined', {
 app.use('/health', healthRouter);
 app.use('/', queryRouter);
 app.use('/', imageRouter);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 app.listen(PORT, () => {
