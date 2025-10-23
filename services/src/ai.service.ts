@@ -60,3 +60,4 @@ export async function analyzeFoodImage(base64Image: string) {
   return analyzeFoodImageSchema.parse(JSON.parse(jsonText));
 }
 
+
