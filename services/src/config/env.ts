@@ -13,6 +13,11 @@ const EnvSchema = z.object({
   OPENAI_TEMPERATURE: z.coerce.number().min(0).max(2).default(0.7),
   OPENAI_MAX_RETRIES: z.coerce.number().min(0).default(3),
   OPENAI_RESPONSE_FORMAT: z.enum(['structured', 'strict']).default('structured'),
+
+  // --- LangSmith ---
+  LANGSMITH_API_KEY: z.string().optional(),
+  LANGSMITH_PROJECT: z.string().default('default'),
+  LANGSMITH_TRACING: z.enum(['true', 'false']).default('false'),
 });
 export const env = EnvSchema.parse(process.env);
 

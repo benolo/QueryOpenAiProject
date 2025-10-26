@@ -9,8 +9,12 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@langchain/core": "^1.0.0-alpha.7",
+    "@langchain/openai": "^1.0.0-alpha.3",
     "dotenv": "^16.6.1",
     "express": "^4.18.2",
+    "langchain": "^1.0.0-alpha.9",
+    "langsmith": "^0.3.74",
     "morgan": "^1.10.0",
     "multer": "^2.0.2",
     "openai": "^6.5.0",
