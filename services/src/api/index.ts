@@ -33,4 +33,5 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 //   logger.info(`Server running on port ${PORT} - env=${process.env.NODE_ENV || 'development'}`);
 //   logger.info('To run Swagger use: http://localhost:3000/api-docs')
 // });
-export default app;
+
+// export default app;
