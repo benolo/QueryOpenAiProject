@@ -12,5 +12,5 @@
   },
   "include": [
     "services/src"
-  ]
+, "api/index.ts"  ]
 }
