@@ -12,6 +12,5 @@
   },
   "include": [
     "services/src",
-    "api/**/*",
-    "services/src/api/index.ts"  ]
+    "services/src/index.ts"  ]
 }
