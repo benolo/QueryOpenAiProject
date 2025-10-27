@@ -34,4 +34,4 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 //   logger.info('To run Swagger use: http://localhost:3000/api-docs')
 // });
 
-// export default app;
+export default app;
