@@ -37,7 +37,7 @@ export const generateResponseWithOptionalContext = traceable(async (
   const answer = response.output_text ?? '';
 
   return answer;
-});
+},{name: 'generateResponseWithOptionalContext'});
 
 export const analyzeFoodImage = traceable(async (base64Image: string) => {
   const dataUrl = `data:image/jpeg;base64,${base64Image}`;
@@ -57,4 +57,4 @@ export const analyzeFoodImage = traceable(async (base64Image: string) => {
 
   const jsonText = response.output_text ?? "{}";
   return analyzeFoodImageSchema.parse(JSON.parse(jsonText));
-});
+}, {name: 'analyzeFoodImage'});
