@@ -25,6 +25,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customSiteTitle: "Food Analysis API",
   swaggerOptions: {
     persistAuthorization: true,
+    url: '/swagger-spec', // Explicitly point to our spec endpoint
+    deepLinking: true,
+    displayRequestDuration: true,
   }
 }));
 
