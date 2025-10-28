@@ -14,22 +14,51 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Simple HTML Swagger UI endpoint
+app.get('/api-docs', (req, res) => {
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Food Analysis API</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui.css" />
+  <style>
+    html { box-sizing: border-box; overflow: -moz-scrollbars-vertical; overflow-y: scroll; }
+    *, *:before, *:after { box-sizing: inherit; }
+    body { margin:0; background: #fafafa; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function() {
+      const ui = SwaggerUIBundle({
+        url: '/swagger-spec',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      });
+    };
+  </script>
+</body>
+</html>
+  `;
+  res.send(html);
+});
+
 // Test endpoint to check swagger spec
 app.get('/swagger-spec', (req, res) => {
   res.json(swaggerSpec);
 });
-
-// Swagger UI configuration for Vercel
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "Food Analysis API",
-  swaggerOptions: {
-    persistAuthorization: true,
-    url: '/swagger-spec', // Explicitly point to our spec endpoint
-    deepLinking: true,
-    displayRequestDuration: true,
-  }
-}));
 
 // Logging
 app.use(morgan('combined', {
