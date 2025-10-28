@@ -14,10 +14,13 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Swagger UI configuration for Vercel
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  explorer: true,
-  customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "Food Analysis API",
+  swaggerOptions: {
+    persistAuthorization: true,
+  }
 }));
 
 // Logging
@@ -32,10 +35,7 @@ app.use('/health', healthRouter);
 app.use('/', queryRouter);
 app.use('/', imageRouter);
 
-// const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
-// app.listen(PORT, () => {
-//   logger.info(`Server running on port ${PORT} - env=${process.env.NODE_ENV || 'development'}`);
-//   logger.info('To run Swagger use: http://localhost:3000/api-docs')
-// });
-
-export default app;
+// Vercel handler
+export default (req: VercelRequest, res: VercelResponse) => {
+  return app(req, res);
+};

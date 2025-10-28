@@ -4,6 +4,12 @@
       { "src": "services/src/index.ts", "use": "@vercel/node" }
     ],
     "routes": [
+      { "src": "/api-docs/(.*)", "dest": "services/src/index.ts" },
       { "src": "/(.*)", "dest": "services/src/index.ts" }
-    ]
+    ],
+    "functions": {
+      "services/src/index.ts": {
+        "maxDuration": 30
+      }
+    }
   }

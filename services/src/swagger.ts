@@ -11,7 +11,12 @@ const options = {
     },
   },
   // Adjust the path below to match where your route/controller files are
-  apis: [path.join(__dirname, './query-service/routes/*.ts'), path.join(__dirname, './image-service/routes/*.ts')],
+  apis: [
+    path.join(__dirname, './query-service/routes/*.js'), 
+    path.join(__dirname, './image-service/routes/*.js'),
+    path.join(__dirname, './query-service/routes/*.ts'), 
+    path.join(__dirname, './image-service/routes/*.ts')
+  ],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);
