@@ -14,6 +14,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Test endpoint to check swagger spec
+app.get('/swagger-spec', (req, res) => {
+  res.json(swaggerSpec);
+});
+
 // Swagger UI configuration for Vercel
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCss: '.swagger-ui .topbar { display: none }',
